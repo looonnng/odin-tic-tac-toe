@@ -56,4 +56,34 @@ const Mark = () => {
 const GameController = (
   playerOneName = 'Player One',
   playerTwoName = 'Player Two',
-) => {};
+) => {
+  const board = GameBoard();
+
+  const players = [
+    {
+      name: playerOneName,
+      token: 'X',
+      score: 0,
+    },
+    {
+      name: playerTwoName,
+      token: 'O',
+      score: 0,
+    },
+  ];
+
+  let activePlayer = players[0];
+
+  const switchPlayerTurn = () => {
+    activePlayer = activePlayer === players[0] ? players[1] : players[0];
+  };
+
+  const getActivePlayer = () => activePlayer;
+
+  const printNewRound = () => {
+    board.printBoard();
+    console.log(`${getActivePlayer().name}'s turn`);
+  };
+
+  return {};
+};
