@@ -14,6 +14,15 @@ const GameBoard = () => {
 
   const getBoard = () => board;
 
+  const dropMark = (row, column, player) => {
+    // Cell is not available when has a value already
+    if (board[row][column].getValue() !== 0) {
+      return;
+      // TODO: Prevent user from adding to occupied cell
+    }
+    board[row][column].addMark(player);
+  };
+
   const printBoard = () => {
     const boardWithMarkVals = board.map((row) =>
       row.map((cell) => cell.getValue()),
@@ -25,6 +34,7 @@ const GameBoard = () => {
   return {
     createGameBoard,
     getBoard,
+    dropMark,
     printBoard,
   };
 };
@@ -41,14 +51,14 @@ const GameBoard = () => {
 const Mark = () => {
   let value = 0;
 
-  const addToken = (player) => {
+  const addMark = (player) => {
     value = player;
   };
 
   const getValue = () => value;
 
   return {
-    addToken,
+    addMark,
     getValue,
   };
 };
@@ -62,12 +72,12 @@ const GameController = (
   const players = [
     {
       name: playerOneName,
-      token: 'X',
+      mark: 'X',
       score: 0,
     },
     {
       name: playerTwoName,
-      token: 'O',
+      mark: 'O',
       score: 0,
     },
   ];
@@ -85,5 +95,19 @@ const GameController = (
     console.log(`${getActivePlayer().name}'s turn`);
   };
 
-  return {};
+  const playRound = (row, column) => {
+    board.dropMark(row, column, getActivePlayer().mark);
+
+    switchPlayerTurn();
+    printNewRound();
+  };
+
+  board.createGameBoard();
+  printNewRound();
+
+  return {
+    playRound,
+  };
 };
+
+const game = GameController();
