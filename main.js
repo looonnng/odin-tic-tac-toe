@@ -91,7 +91,7 @@ const GameController = (
   };
 
   const playRound = (row, column) => {
-    // Cell is not available when has a value already
+    // Check if cell is available
     if (board.getBoard()[row][column].getValue() !== 0) {
       console.log('You cannot place on this cell!');
       printNewRound();
@@ -99,6 +99,9 @@ const GameController = (
     }
 
     board.dropMark(row, column, getActivePlayer().mark);
+
+    // Check win or tie conditions
+
     switchPlayerTurn();
     printNewRound();
   };
@@ -108,7 +111,19 @@ const GameController = (
 
   return {
     playRound,
+    getActivePlayer,
+    getBoard: board.getBoard,
   };
 };
 
-const game = GameController();
+const ScreenController = () => {
+  const game = GameController();
+  const playerTurnDiv = document.querySelector('.player-turn');
+  const boardDiv = document.querySelector('.board');
+
+  const updateScreen = () => {
+    boardDiv.textContent = '';
+  };
+
+  const clickHandlerBoard = () => {};
+};
