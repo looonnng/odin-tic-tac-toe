@@ -58,6 +58,23 @@ const Mark = () => {
   };
 };
 
+const Winner = () => {
+  const checkWinRow = (board) => {};
+
+  const checkWinColumn = (board) => {};
+
+  const checkWinDiagonal = (board) => {};
+
+  const checkTie = (board) => {};
+
+  return {
+    checkWinRow,
+    checkWinColumn,
+    checkWinDiagonal,
+    checkTie,
+  };
+};
+
 const GameController = (
   playerOneName = 'Player One',
   playerTwoName = 'Player Two',
@@ -91,7 +108,7 @@ const GameController = (
   };
 
   const playRound = (row, column) => {
-    // Check if cell is available
+    // Check if cell is available by coercing empty space to 0
     if (board.getBoard()[row][column].getValue() != 0) {
       console.log('You cannot place on this cell!');
       printNewRound();
@@ -99,7 +116,6 @@ const GameController = (
     }
 
     board.dropMark(row, column, getActivePlayer().mark);
-
     // Check win or tie conditions
 
     switchPlayerTurn();
@@ -116,49 +132,51 @@ const GameController = (
   };
 };
 
-const ScreenController = () => {
-  const game = GameController();
-  const playerTurnDiv = document.querySelector('.player-turn');
-  const boardDiv = document.querySelector('.board');
+const game = GameController();
 
-  const updateScreen = () => {
-    boardDiv.textContent = '';
+// const ScreenController = () => {
+//   const game = GameController();
+//   const playerTurnDiv = document.querySelector('.player-turn');
+//   const boardDiv = document.querySelector('.board');
 
-    const currentBoard = game.getBoard();
+//   const updateScreen = () => {
+//     boardDiv.textContent = '';
 
-    const currentPlayer = game.getActivePlayer();
+//     const currentBoard = game.getBoard();
 
-    playerTurnDiv.textContent = `
-      ${currentPlayer.name}'s Turn!
-    `;
-    currentBoard.forEach((row, rowIndex) => {
-      row.forEach((cell, columnIndex) => {
-        const cellButton = document.createElement('button');
+//     const currentPlayer = game.getActivePlayer();
 
-        cellButton.classList.add('cell');
+//     playerTurnDiv.textContent = `
+//       ${currentPlayer.name}'s Turn!
+//     `;
+//     currentBoard.forEach((row, rowIndex) => {
+//       row.forEach((cell, columnIndex) => {
+//         const cellButton = document.createElement('button');
 
-        cellButton.dataset.row = rowIndex;
-        cellButton.dataset.column = columnIndex;
+//         cellButton.classList.add('cell');
 
-        cellButton.textContent = cell.getValue();
+//         cellButton.dataset.row = rowIndex;
+//         cellButton.dataset.column = columnIndex;
 
-        boardDiv.appendChild(cellButton);
-      });
-    });
-  };
+//         cellButton.textContent = cell.getValue();
 
-  const clickHandlerBoard = (e) => {
-    const selectedRow = e.target.dataset.row;
-    const selectedColumn = e.target.dataset.column;
+//         boardDiv.appendChild(cellButton);
+//       });
+//     });
+//   };
 
-    if (!selectedRow && !selectedColumn) return;
+//   const clickHandlerBoard = (e) => {
+//     const selectedRow = e.target.dataset.row;
+//     const selectedColumn = e.target.dataset.column;
 
-    game.playRound(selectedRow, selectedColumn);
-    updateScreen();
-  };
-  boardDiv.addEventListener('click', clickHandlerBoard);
+//     if (!selectedRow && !selectedColumn) return;
 
-  updateScreen();
-};
+//     game.playRound(selectedRow, selectedColumn);
+//     updateScreen();
+//   };
+//   boardDiv.addEventListener('click', clickHandlerBoard);
 
-ScreenController();
+//   updateScreen();
+// };
+
+// ScreenController();
