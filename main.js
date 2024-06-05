@@ -44,7 +44,7 @@ const GameBoard = () => {
 */
 
 const Mark = () => {
-  let value = 0;
+  let value = ' ';
 
   const addMark = (player) => {
     value = player;
@@ -92,7 +92,7 @@ const GameController = (
 
   const playRound = (row, column) => {
     // Check if cell is available
-    if (board.getBoard()[row][column].getValue() !== 0) {
+    if (board.getBoard()[row][column].getValue() != 0) {
       console.log('You cannot place on this cell!');
       printNewRound();
       return;
@@ -123,7 +123,42 @@ const ScreenController = () => {
 
   const updateScreen = () => {
     boardDiv.textContent = '';
+
+    const currentBoard = game.getBoard();
+
+    const currentPlayer = game.getActivePlayer();
+
+    playerTurnDiv.textContent = `
+      ${currentPlayer.name}'s Turn!
+    `;
+    currentBoard.forEach((row, rowIndex) => {
+      row.forEach((cell, columnIndex) => {
+        const cellButton = document.createElement('button');
+
+        cellButton.classList.add('cell');
+
+        cellButton.dataset.row = rowIndex;
+        cellButton.dataset.column = columnIndex;
+
+        cellButton.textContent = cell.getValue();
+
+        boardDiv.appendChild(cellButton);
+      });
+    });
   };
 
-  const clickHandlerBoard = () => {};
+  const clickHandlerBoard = (e) => {
+    const selectedRow = e.target.dataset.row;
+    const selectedColumn = e.target.dataset.column;
+
+    if (!selectedRow && !selectedColumn) return;
+
+    game.playRound(selectedRow, selectedColumn);
+    updateScreen();
+  };
+  boardDiv.addEventListener('click', clickHandlerBoard);
+
+  updateScreen();
 };
+
+ScreenController();
