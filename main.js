@@ -15,11 +15,6 @@ const GameBoard = () => {
   const getBoard = () => board;
 
   const dropMark = (row, column, player) => {
-    // Cell is not available when has a value already
-    if (board[row][column].getValue() !== 0) {
-      return;
-      // TODO: Prevent user from adding to occupied cell
-    }
     board[row][column].addMark(player);
   };
 
@@ -96,8 +91,14 @@ const GameController = (
   };
 
   const playRound = (row, column) => {
-    board.dropMark(row, column, getActivePlayer().mark);
+    // Cell is not available when has a value already
+    if (board.getBoard()[row][column].getValue() !== 0) {
+      console.log('You cannot place on this cell!');
+      printNewRound();
+      return;
+    }
 
+    board.dropMark(row, column, getActivePlayer().mark);
     switchPlayerTurn();
     printNewRound();
   };
