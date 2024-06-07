@@ -87,7 +87,9 @@ const Winner = () => {
   };
 
   const checkTie = (board) => {
-    return board.getBoard().every((row) => row.every(cell => cell.getValue() !== ' '));
+    return board
+      .getBoard()
+      .every((row) => row.every((cell) => cell.getValue() !== ' '));
   };
 
   return {
@@ -141,7 +143,7 @@ const GameController = (
 
     board.dropMark(row, column, getActivePlayer().mark);
     // Check win or tie conditions
-        if (win.checkTie(board)) {
+    if (win.checkTie(board)) {
       console.log('Boring, this is a tie game');
       board.printBoard();
       board.createGameBoard();
@@ -159,8 +161,6 @@ const GameController = (
       printNewRound();
       return;
     }
-
-
 
     switchPlayerTurn();
     printNewRound();
