@@ -70,7 +70,21 @@ const Winner = () => {
     return markedCells.every((cell) => cell === playerMark);
   };
 
-  const checkWinDiagonal = (board) => {};
+  const checkWinDiagonal = (board, playerMark) => {
+    const markedCells = board.getBoard();
+    const cellsLeftToRight = [];
+    const cellsRightToLeft = [];
+
+    for (let i = 0, j = 2; i < markedCells.length; i++, j--) {
+      cellsLeftToRight.push(markedCells[i][i].getValue());
+      cellsRightToLeft.push(markedCells[j][i].getValue());
+    }
+
+    return (
+      cellsLeftToRight.every((cell) => cell === playerMark) ||
+      cellsRightToLeft.every((cell) => cell === playerMark)
+    );
+  };
 
   const checkTie = (board) => {};
 
@@ -125,10 +139,10 @@ const GameController = (
 
     board.dropMark(row, column, getActivePlayer().mark);
     // Check win or tie conditions
-
     if (
       win.checkWinRow(row, board, getActivePlayer().mark) ||
-      win.checkWinColumn(column, board, getActivePlayer().mark)
+      win.checkWinColumn(column, board, getActivePlayer().mark) ||
+      win.checkWinDiagonal(board, getActivePlayer().mark)
     ) {
       console.log(`hell yeah, ${getActivePlayer().name} just won`);
       board.printBoard();
