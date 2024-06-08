@@ -187,6 +187,12 @@ const ScreenController = () => {
         cellButton.dataset.column = columnIndex;
 
         cellButton.textContent = cell.getValue();
+        
+        if (cellButton.textContent === 'X') {
+          cellButton.classList.add('player-one');
+        } else if (cellButton.textContent ==='O') {
+          cellButton.classList.add('player-two');
+        }
 
         boardDiv.appendChild(cellButton);
       });

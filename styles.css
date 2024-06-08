@@ -1,6 +1,6 @@
 :root {
-  --player-one : #043C5A;
-  --player-two : #E52A21;
+  --player-one: #043c5a;
+  --player-two: #e52a21;
 }
 
 * {
@@ -49,13 +49,14 @@ body {
 
 .cell {
   color: #254336;
+  background: #dad3be;
+  font-size: 3rem;
+  font-weight: 800;
+
   display: flex;
   justify-content: center;
   align-items: center;
-  text-align: center;
-  font-size: 2rem;
-  border: 1px solid grey;
-  background: #dad3be;
+  border: 1px solid black;
   cursor: pointer;
 }
 
@@ -72,4 +73,12 @@ body {
 
 .play-again-btn:hover {
   opacity: 0.75;
+}
+
+.player-one {
+  color: var(--player-one);
+}
+
+.player-two {
+  color: var(--player-two);
 }
