@@ -162,10 +162,9 @@ const GameController = (
     playRound,
     getActivePlayer,
     getBoard: board.getBoard,
+    createNewBoard: board.createGameBoard,
   };
 };
-
-const game = GameController();
 
 const ScreenController = () => {
   const game = GameController();
@@ -214,6 +213,21 @@ const ScreenController = () => {
       document.querySelector('.board-container').appendChild(resultDiv);
 
       boardDiv.removeEventListener('click', clickHandlerBoard);
+
+      const playAgainButton = document.createElement('button');
+      playAgainButton.textContent = 'Play Again';
+      playAgainButton.classList.add('play-again');
+      document.querySelector('.board-container').appendChild(playAgainButton);
+
+      const clickHandlerPlayAgain = () => {
+        game.createNewBoard();
+        boardDiv.addEventListener('click', clickHandlerBoard);
+        updateScreen();
+        resultDiv.remove();
+        playAgainButton.remove();
+      };
+
+      playAgainButton.addEventListener('click', clickHandlerPlayAgain);
     }
   };
 
@@ -223,14 +237,3 @@ const ScreenController = () => {
 };
 
 ScreenController();
-
-function createPlayAgainButton() {
-  const playAgainButton = document.createElement('button');
-  playAgainButton.textContent = 'Play Again';
-  playAgainButton.classList.add('play-again');
-  document.querySelector('.board-container').appendChild(playAgainButton);
-
-  const clickHandlerPlayAgain = () => {};
-
-  playAgainButton.addEventListener('click', clickHandlerPlayAgain);
-}
