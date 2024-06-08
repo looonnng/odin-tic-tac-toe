@@ -128,13 +128,8 @@ const GameController = (
 
   const getActivePlayer = () => activePlayer;
 
-  // const printNewRound = () => {
-  //   board.printBoard();
-  //   console.log(`${getActivePlayer().name}'s turn`);
-  // };
-
   const playRound = (row, column) => {
-    // Check if cell is available by coercing empty space to 0
+    // Check if cell is occupied
     if (board.getBoard()[row][column].getValue() != 0) {
       alert('You cannot place on this cell!');
       return;
@@ -208,21 +203,27 @@ const ScreenController = () => {
 
     // Check win or tie
     if (result) {
+
+      // Create a winner display
       const resultDiv = document.createElement('div');
       resultDiv.textContent = result;
       document.querySelector('.board-container').appendChild(resultDiv);
 
       boardDiv.removeEventListener('click', clickHandlerBoard);
 
+      // Create button to play again
       const playAgainButton = document.createElement('button');
       playAgainButton.textContent = 'Play Again';
       playAgainButton.classList.add('play-again');
       document.querySelector('.board-container').appendChild(playAgainButton);
 
+      // Function to handle event after play again is clicked
       const clickHandlerPlayAgain = () => {
         game.createNewBoard();
-        boardDiv.addEventListener('click', clickHandlerBoard);
+        boardDiv.addEventListener('click', clickHandlerBoard); // Make game board playable again
+
         updateScreen();
+
         resultDiv.remove();
         playAgainButton.remove();
       };
@@ -231,6 +232,7 @@ const ScreenController = () => {
     }
   };
 
+  // Initialize game board
   boardDiv.addEventListener('click', clickHandlerBoard);
 
   updateScreen();
