@@ -128,46 +128,35 @@ const GameController = (
 
   const getActivePlayer = () => activePlayer;
 
-  const printNewRound = () => {
-    board.printBoard();
-    console.log(`${getActivePlayer().name}'s turn`);
-  };
+  // const printNewRound = () => {
+  //   board.printBoard();
+  //   console.log(`${getActivePlayer().name}'s turn`);
+  // };
 
   const playRound = (row, column) => {
     // Check if cell is available by coercing empty space to 0
     if (board.getBoard()[row][column].getValue() != 0) {
-      console.log('You cannot place on this cell!');
-      printNewRound();
+      alert('You cannot place on this cell!');
       return;
     }
 
     board.dropMark(row, column, getActivePlayer().mark);
     // Check win or tie conditions
-    if (win.checkTie(board)) {
-      console.log('Boring, this is a tie game');
-      board.printBoard();
-      board.createGameBoard();
-      printNewRound();
-      return;
-    }
+
     if (
       win.checkWinRow(row, board, getActivePlayer().mark) ||
       win.checkWinColumn(column, board, getActivePlayer().mark) ||
       win.checkWinDiagonal(board, getActivePlayer().mark)
     ) {
-      console.log(`hell yeah, ${getActivePlayer().name} just won`);
-      board.printBoard();
-      board.createGameBoard();
-      printNewRound();
-      return;
+      return `hell yeah, ${getActivePlayer().name} just won`;
+    } else if (win.checkTie(board)) {
+      return 'Boring, this is a tie game';
     }
 
     switchPlayerTurn();
-    printNewRound();
   };
 
   board.createGameBoard();
-  printNewRound();
 
   return {
     playRound,
@@ -178,49 +167,70 @@ const GameController = (
 
 const game = GameController();
 
-// const ScreenController = () => {
-//   const game = GameController();
-//   const playerTurnDiv = document.querySelector('.player-turn');
-//   const boardDiv = document.querySelector('.board');
+const ScreenController = () => {
+  const game = GameController();
+  const playerTurnDiv = document.querySelector('.player-turn');
+  const boardDiv = document.querySelector('.board');
 
-//   const updateScreen = () => {
-//     boardDiv.textContent = '';
+  const updateScreen = () => {
+    boardDiv.textContent = '';
 
-//     const currentBoard = game.getBoard();
+    const currentBoard = game.getBoard();
 
-//     const currentPlayer = game.getActivePlayer();
+    const currentPlayer = game.getActivePlayer();
 
-//     playerTurnDiv.textContent = `
-//       ${currentPlayer.name}'s Turn!
-//     `;
-//     currentBoard.forEach((row, rowIndex) => {
-//       row.forEach((cell, columnIndex) => {
-//         const cellButton = document.createElement('button');
+    playerTurnDiv.textContent = `
+      ${currentPlayer.name}'s Turn!
+    `;
+    currentBoard.forEach((row, rowIndex) => {
+      row.forEach((cell, columnIndex) => {
+        const cellButton = document.createElement('button');
 
-//         cellButton.classList.add('cell');
+        cellButton.classList.add('cell');
 
-//         cellButton.dataset.row = rowIndex;
-//         cellButton.dataset.column = columnIndex;
+        cellButton.dataset.row = rowIndex;
+        cellButton.dataset.column = columnIndex;
 
-//         cellButton.textContent = cell.getValue();
+        cellButton.textContent = cell.getValue();
 
-//         boardDiv.appendChild(cellButton);
-//       });
-//     });
-//   };
+        boardDiv.appendChild(cellButton);
+      });
+    });
+  };
 
-//   const clickHandlerBoard = (e) => {
-//     const selectedRow = e.target.dataset.row;
-//     const selectedColumn = e.target.dataset.column;
+  const clickHandlerBoard = (e) => {
+    const selectedRow = e.target.dataset.row;
+    const selectedColumn = e.target.dataset.column;
 
-//     if (!selectedRow && !selectedColumn) return;
+    if (!selectedRow && !selectedColumn) return;
 
-//     game.playRound(selectedRow, selectedColumn);
-//     updateScreen();
-//   };
-//   boardDiv.addEventListener('click', clickHandlerBoard);
+    const result = game.playRound(selectedRow, selectedColumn);
+    updateScreen();
 
-//   updateScreen();
-// };
+    // Check win or tie
+    if (result) {
+      const resultDiv = document.createElement('div');
+      resultDiv.textContent = result;
+      document.querySelector('.board-container').appendChild(resultDiv);
 
-// ScreenController();
+      boardDiv.removeEventListener('click', clickHandlerBoard);
+    }
+  };
+
+  boardDiv.addEventListener('click', clickHandlerBoard);
+
+  updateScreen();
+};
+
+ScreenController();
+
+function createPlayAgainButton() {
+  const playAgainButton = document.createElement('button');
+  playAgainButton.textContent = 'Play Again';
+  playAgainButton.classList.add('play-again');
+  document.querySelector('.board-container').appendChild(playAgainButton);
+
+  const clickHandlerPlayAgain = () => {};
+
+  playAgainButton.addEventListener('click', clickHandlerPlayAgain);
+}
