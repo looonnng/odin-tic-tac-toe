@@ -129,7 +129,6 @@ const GameController = (
   const getActivePlayer = () => activePlayer;
 
   const playRound = (row, column) => {
-    
     // Check if cell is occupied
     if (board.getBoard()[row][column].getValue() != 0) {
       alert('You cannot place on this cell!');
@@ -144,7 +143,7 @@ const GameController = (
       win.checkWinColumn(column, board, getActivePlayer().mark) ||
       win.checkWinDiagonal(board, getActivePlayer().mark)
     ) {
-      return `Hell yeah, ${getActivePlayer().name} just won`;
+      return `Hell yeah, <span class='${getActivePlayer().name.toLowerCase().split(' ').join('-')}'>${getActivePlayer().name}</span> just won`;
     } else if (win.checkTie(board)) {
       return 'Boring, this is a tie game';
     }
@@ -187,10 +186,10 @@ const ScreenController = () => {
         cellButton.dataset.column = columnIndex;
 
         cellButton.textContent = cell.getValue();
-        
+
         if (cellButton.textContent === 'X') {
           cellButton.classList.add('player-one');
-        } else if (cellButton.textContent ==='O') {
+        } else if (cellButton.textContent === 'O') {
           cellButton.classList.add('player-two');
         }
 
@@ -210,10 +209,9 @@ const ScreenController = () => {
 
     // Check win or tie
     if (result) {
-
       // Create a winner display
       const resultDiv = document.createElement('h1');
-      resultDiv.textContent = result;
+      resultDiv.innerHTML = result;
       resultDiv.classList.add('game-result');
       document.querySelector('.board-container').appendChild(resultDiv);
 
