@@ -1,3 +1,8 @@
+:root {
+  --player-one : #043C5A;
+  --player-two : #E52A21;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -6,11 +11,11 @@
 
 body {
   background-color: #254336;
-  color: #DAD3BE;
+  color: #dad3be;
 }
 
 .wrapper {
-  width: 80%;
+  width: 90%;
   margin: 0 auto;
 }
 
@@ -32,13 +37,14 @@ body {
 .board {
   display: grid;
   height: 500px;
-  width: 500px;
+  width: 100%;
+  max-width: 500px;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
-  border: 1px solid #6B8A7A;
+  border: 1px solid #6b8a7a;
   gap: 2px;
   padding: 2px;
-  background-color: #B7B597;
+  background-color: #b7b597;
 }
 
 .cell {
@@ -49,6 +55,21 @@ body {
   text-align: center;
   font-size: 2rem;
   border: 1px solid grey;
-  background: #DAD3BE;
+  background: #dad3be;
   cursor: pointer;
+}
+
+.game-result {
+  text-align: center;
+}
+
+.play-again-btn {
+  color: #254336;
+  background-color: #b7b597;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+}
+
+.play-again-btn:hover {
+  opacity: 0.75;
 }

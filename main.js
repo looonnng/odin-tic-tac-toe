@@ -129,6 +129,7 @@ const GameController = (
   const getActivePlayer = () => activePlayer;
 
   const playRound = (row, column) => {
+    
     // Check if cell is occupied
     if (board.getBoard()[row][column].getValue() != 0) {
       alert('You cannot place on this cell!');
@@ -136,14 +137,14 @@ const GameController = (
     }
 
     board.dropMark(row, column, getActivePlayer().mark);
-    // Check win or tie conditions
 
+    // Check win or tie conditions
     if (
       win.checkWinRow(row, board, getActivePlayer().mark) ||
       win.checkWinColumn(column, board, getActivePlayer().mark) ||
       win.checkWinDiagonal(board, getActivePlayer().mark)
     ) {
-      return `hell yeah, ${getActivePlayer().name} just won`;
+      return `Hell yeah, ${getActivePlayer().name} just won`;
     } else if (win.checkTie(board)) {
       return 'Boring, this is a tie game';
     }
@@ -205,8 +206,9 @@ const ScreenController = () => {
     if (result) {
 
       // Create a winner display
-      const resultDiv = document.createElement('div');
+      const resultDiv = document.createElement('h1');
       resultDiv.textContent = result;
+      resultDiv.classList.add('game-result');
       document.querySelector('.board-container').appendChild(resultDiv);
 
       boardDiv.removeEventListener('click', clickHandlerBoard);
@@ -214,7 +216,7 @@ const ScreenController = () => {
       // Create button to play again
       const playAgainButton = document.createElement('button');
       playAgainButton.textContent = 'Play Again';
-      playAgainButton.classList.add('play-again');
+      playAgainButton.classList.add('play-again-btn');
       document.querySelector('.board-container').appendChild(playAgainButton);
 
       // Function to handle event after play again is clicked
