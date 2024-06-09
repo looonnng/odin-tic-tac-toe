@@ -172,7 +172,7 @@ const ScreenController = () => {
   const playerTurnDiv = document.querySelector('.player-turn');
   const boardDiv = document.querySelector('.board');
   const scoreBoardDiv = document.querySelector('.score-board');
-  const newGameButton = document.querySelector('.new-game-btn');
+  const resetBoardButton = document.querySelector('.reset-board-btn');
 
   const updateScreen = () => {
     boardDiv.textContent = '';
@@ -222,12 +222,12 @@ const ScreenController = () => {
     // Check win or tie
     if (result) {
       // Create a winner display
+      resetBoardButton.hidden = true;
+
       const resultDiv = document.createElement('h1');
       resultDiv.innerHTML = result;
       resultDiv.classList.add('game-result');
-      document
-        .querySelector('.board-container')
-        .insertBefore(resultDiv, newGameButton);
+      document.querySelector('.board-container').appendChild(resultDiv);
 
       boardDiv.removeEventListener('click', clickHandlerBoard);
 
@@ -237,7 +237,7 @@ const ScreenController = () => {
       playAgainButton.classList.add('play-again-btn');
       document
         .querySelector('.board-container')
-        .insertBefore(playAgainButton, newGameButton);
+        .insertBefore(playAgainButton, resetBoardButton);
 
       // Function to handle event after play again is clicked
       const clickHandlerPlayAgain = () => {
@@ -248,14 +248,16 @@ const ScreenController = () => {
 
         resultDiv.remove();
         playAgainButton.remove();
+        resetBoardButton.hidden = false;
       };
 
       playAgainButton.addEventListener('click', clickHandlerPlayAgain);
     }
   };
 
-  const clickHandleNewGameButton = () => {
-    window.location.reload();
+  const clickHandleResetBoardButton = () => {
+    game.createNewBoard();
+    updateScreen();
   };
 
   // Initialize game board
@@ -264,7 +266,7 @@ const ScreenController = () => {
 
   updateScreen();
 
-  newGameButton.addEventListener('click', clickHandleNewGameButton);
+  resetBoardButton.addEventListener('click', clickHandleResetBoardButton);
 };
 
 ScreenController();
