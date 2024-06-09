@@ -27,9 +27,9 @@ The main components of the project include:
 
 ## Future Improvements
 
-[ ] Implement an AI opponent to allow single-player mode.
+- [ ] Implement an AI opponent to allow single-player mode.
 
-[ ] Enhance the UI with animations and better styling.
+- [ ] Enhance the UI with animations and better styling.
 
 ## References
 
