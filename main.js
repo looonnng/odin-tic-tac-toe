@@ -254,12 +254,17 @@ const ScreenController = () => {
     }
   };
 
-  const newGame = () => {};
+  const clickHandleNewGameButton = () => {
+    window.location.reload();
+  };
 
   // Initialize game board
+
   boardDiv.addEventListener('click', clickHandlerBoard);
 
   updateScreen();
+
+  newGameButton.addEventListener('click', clickHandleNewGameButton);
 };
 
 ScreenController();
