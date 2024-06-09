@@ -128,10 +128,11 @@ const GameController = (
 
   const getActivePlayer = () => activePlayer;
 
+  const getPlayerScore = () => players.map((player) => player.score);
+
   const playRound = (row, column) => {
     // Check if cell is occupied
     if (board.getBoard()[row][column].getValue() != 0) {
-      alert('You cannot place on this cell!');
       return;
     }
 
@@ -143,7 +144,11 @@ const GameController = (
       win.checkWinColumn(column, board, getActivePlayer().mark) ||
       win.checkWinDiagonal(board, getActivePlayer().mark)
     ) {
-      return `Hell yeah, <span class='${getActivePlayer().name.toLowerCase().split(' ').join('-')}'>${getActivePlayer().name}</span> just won`;
+      getActivePlayer().score += 1;
+      return `Hell yeah, <span class='${getActivePlayer()
+        .name.toLowerCase()
+        .split(' ')
+        .join('-')}'>${getActivePlayer().name}</span> just won`;
     } else if (win.checkTie(board)) {
       return 'Boring, this is a tie game';
     }
@@ -158,6 +163,7 @@ const GameController = (
     getActivePlayer,
     getBoard: board.getBoard,
     createNewBoard: board.createGameBoard,
+    getPlayerScore,
   };
 };
 
@@ -165,13 +171,17 @@ const ScreenController = () => {
   const game = GameController();
   const playerTurnDiv = document.querySelector('.player-turn');
   const boardDiv = document.querySelector('.board');
+  const scoreBoardDiv = document.querySelector('.score-board');
 
   const updateScreen = () => {
     boardDiv.textContent = '';
-
     const currentBoard = game.getBoard();
 
     const currentPlayer = game.getActivePlayer();
+
+    scoreBoardDiv.textContent = `Player One : ${
+      game.getPlayerScore()[0]
+    } , Player Two: ${game.getPlayerScore()[1]} `;
 
     playerTurnDiv.textContent = `
       ${currentPlayer.name}'s Turn!
@@ -240,7 +250,6 @@ const ScreenController = () => {
 
   // Initialize game board
   boardDiv.addEventListener('click', clickHandlerBoard);
-
   updateScreen();
 };
 
