@@ -1,5 +1,5 @@
 :root {
-  --player-one: #043c5a;
+  --player-one: #098bd1;
   --player-two: #e52a21;
 }
 
@@ -65,7 +65,7 @@ body {
 }
 
 .play-again-btn,
-.new-game-btn {
+.reset-board-btn {
   color: #254336;
   background-color: #dad3be;
   padding: 0.5rem 1rem;
@@ -73,13 +73,12 @@ body {
 }
 
 .play-again-btn:hover,
-.new-game-btn:hover {
+.reset-board-btn:hover {
   opacity: 0.75;
 }
 
 .player-one {
   color: var(--player-one);
-  background-color: #dad3be;
 }
 
 .player-two {
