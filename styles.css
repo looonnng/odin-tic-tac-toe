@@ -64,14 +64,16 @@ body {
   text-align: center;
 }
 
-.play-again-btn {
+.play-again-btn,
+.new-game-btn {
   color: #254336;
   background-color: #dad3be;
   padding: 0.5rem 1rem;
   border-radius: 0.5rem;
 }
 
-.play-again-btn:hover {
+.play-again-btn:hover,
+.new-game-btn:hover {
   opacity: 0.75;
 }
 

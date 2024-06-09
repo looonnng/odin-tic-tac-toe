@@ -172,6 +172,7 @@ const ScreenController = () => {
   const playerTurnDiv = document.querySelector('.player-turn');
   const boardDiv = document.querySelector('.board');
   const scoreBoardDiv = document.querySelector('.score-board');
+  const newGameButton = document.querySelector('.new-game-btn');
 
   const updateScreen = () => {
     boardDiv.textContent = '';
@@ -215,6 +216,7 @@ const ScreenController = () => {
     if (!selectedRow && !selectedColumn) return;
 
     const result = game.playRound(selectedRow, selectedColumn);
+
     updateScreen();
 
     // Check win or tie
@@ -223,7 +225,9 @@ const ScreenController = () => {
       const resultDiv = document.createElement('h1');
       resultDiv.innerHTML = result;
       resultDiv.classList.add('game-result');
-      document.querySelector('.board-container').appendChild(resultDiv);
+      document
+        .querySelector('.board-container')
+        .insertBefore(resultDiv, newGameButton);
 
       boardDiv.removeEventListener('click', clickHandlerBoard);
 
@@ -231,7 +235,9 @@ const ScreenController = () => {
       const playAgainButton = document.createElement('button');
       playAgainButton.textContent = 'Play Again';
       playAgainButton.classList.add('play-again-btn');
-      document.querySelector('.board-container').appendChild(playAgainButton);
+      document
+        .querySelector('.board-container')
+        .insertBefore(playAgainButton, newGameButton);
 
       // Function to handle event after play again is clicked
       const clickHandlerPlayAgain = () => {
@@ -248,8 +254,11 @@ const ScreenController = () => {
     }
   };
 
+  const newGame = () => {};
+
   // Initialize game board
   boardDiv.addEventListener('click', clickHandlerBoard);
+
   updateScreen();
 };
 
