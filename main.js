@@ -121,6 +121,8 @@ const GameController = (
 
   const getPlayerScore = () => players.map((player) => player.score);
 
+  const getPlayerName = () => players.map((player) => player.name);
+
   const playRound = (row, column) => {
     // Check if cell is occupied
     if (board.getBoard()[row][column].getValue() != 0) {
@@ -136,10 +138,9 @@ const GameController = (
       win.checkWinDiagonal(board, getActivePlayer().mark)
     ) {
       getActivePlayer().score += 1;
-      return `Hell yeah, <span class='${getActivePlayer()
-        .name.toLowerCase()
-        .split(' ')
-        .join('-')}'>${getActivePlayer().name}</span> just won`;
+      return `Hell yeah, <span class='${
+        getActivePlayer().mark === 'X' ? 'player-one' : 'player-two'
+      }'>${getActivePlayer().name}</span> just won`;
     } else if (win.checkTie(board)) {
       return 'Boring, this is a tie game';
     }
@@ -152,14 +153,15 @@ const GameController = (
   return {
     playRound,
     getActivePlayer,
+    getPlayerScore,
+    getPlayerName,
     getBoard: board.getBoard,
     createNewBoard: board.createGameBoard,
-    getPlayerScore,
   };
 };
 
 const ScreenController = () => {
-  const game = GameController();
+  const game = GameController('me', 'myself');
   const playerTurnDiv = document.querySelector('.player-turn');
   const boardDiv = document.querySelector('.board');
   const scoreBoardDiv = document.querySelector('.score-board');
@@ -167,13 +169,14 @@ const ScreenController = () => {
 
   const updateScreen = () => {
     boardDiv.textContent = '';
+
     const currentBoard = game.getBoard();
 
     const currentPlayer = game.getActivePlayer();
 
-    scoreBoardDiv.textContent = `Player One : ${
+    scoreBoardDiv.textContent = `${game.getPlayerName()[0]} : ${
       game.getPlayerScore()[0]
-    } , Player Two: ${game.getPlayerScore()[1]} `;
+    } , ${game.getPlayerName()[1]}: ${game.getPlayerScore()[1]} `;
 
     playerTurnDiv.textContent = `
       ${currentPlayer.name}'s Turn!
@@ -246,16 +249,16 @@ const ScreenController = () => {
     }
   };
 
+  // Initialize game board
+  boardDiv.addEventListener('click', clickHandlerBoard);
+
+  updateScreen();
+
+  // Create reset board button
   const clickHandleResetBoardButton = () => {
     game.createNewBoard();
     updateScreen();
   };
-
-  // Initialize game board
-
-  boardDiv.addEventListener('click', clickHandlerBoard);
-
-  updateScreen();
 
   resetBoardButton.addEventListener('click', clickHandleResetBoardButton);
 };
