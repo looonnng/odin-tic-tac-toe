@@ -19,19 +19,10 @@ const GameBoard = () => {
     board[row][column].addMark(player);
   };
 
-  const printBoard = () => {
-    const boardWithMarkVals = board.map((row) =>
-      row.map((cell) => cell.getValue()),
-    );
-
-    console.log(boardWithMarkVals);
-  };
-
   return {
     createGameBoard,
     getBoard,
     dropMark,
-    printBoard,
   };
 };
 
