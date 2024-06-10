@@ -160,23 +160,26 @@ const GameController = (
   };
 };
 
-const ScreenController = () => {
-  const game = GameController('me', 'myself');
+const ScreenController = (playerOne, playerTwo) => {
+  const game = GameController(playerOne, playerTwo);
   const playerTurnDiv = document.querySelector('.player-turn');
   const boardDiv = document.querySelector('.board');
   const scoreBoardDiv = document.querySelector('.score-board');
   const resetBoardButton = document.querySelector('.reset-board-btn');
+  const scoreBoardText = document.createElement('p');
 
   const updateScreen = () => {
     boardDiv.textContent = '';
+
+    scoreBoardText.textContent = `${game.getPlayerName()[0]} : ${
+      game.getPlayerScore()[0]
+    } , ${game.getPlayerName()[1]}: ${game.getPlayerScore()[1]}`;
 
     const currentBoard = game.getBoard();
 
     const currentPlayer = game.getActivePlayer();
 
-    scoreBoardDiv.textContent = `${game.getPlayerName()[0]} : ${
-      game.getPlayerScore()[0]
-    } , ${game.getPlayerName()[1]}: ${game.getPlayerScore()[1]} `;
+    scoreBoardDiv.appendChild(scoreBoardText);
 
     playerTurnDiv.textContent = `
       ${currentPlayer.name}'s Turn!
@@ -263,4 +266,14 @@ const ScreenController = () => {
   resetBoardButton.addEventListener('click', clickHandleResetBoardButton);
 };
 
-ScreenController();
+const startGame = () => {
+  const currentPlayerOne = document.querySelector('#player-one').value;
+  const currentPlayerTwo = document.querySelector('#player-two').value;
+  console.log(currentPlayerOne, currentPlayerTwo);
+  ScreenController(currentPlayerOne, currentPlayerTwo);
+  getCurrentPlayerName.remove();
+};
+
+const getCurrentPlayerName = document.querySelector('form');
+
+getCurrentPlayerName.addEventListener('submit', startGame);
