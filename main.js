@@ -162,10 +162,23 @@ const GameController = (
 
 const ScreenController = (playerOne, playerTwo) => {
   const game = GameController(playerOne, playerTwo);
-  const playerTurnDiv = document.querySelector('.player-turn');
-  const boardDiv = document.querySelector('.board');
+
+  // Create game board && current player's turn && reset board button
+  const boardDiv = document.createElement('div');
+  boardDiv.classList.add('board');
+
+  const playerTurnDiv = document.createElement('div');
+  playerTurnDiv.classList.add('player-turn');
+
+  const resetBoardButton = document.createElement('button');
+  resetBoardButton.classList.add('reset-board-btn');
+  resetBoardButton.textContent = 'Reset Board';
+
+  document.querySelector('.board-container').appendChild(playerTurnDiv);
+  document.querySelector('.board-container').appendChild(boardDiv);
+  document.querySelector('.board-container').appendChild(resetBoardButton);
+
   const scoreBoardDiv = document.querySelector('.score-board');
-  const resetBoardButton = document.querySelector('.reset-board-btn');
   const scoreBoardText = document.createElement('p');
 
   const updateScreen = () => {
@@ -173,7 +186,7 @@ const ScreenController = (playerOne, playerTwo) => {
 
     scoreBoardText.textContent = `${game.getPlayerName()[0]} : ${
       game.getPlayerScore()[0]
-    } , ${game.getPlayerName()[1]}: ${game.getPlayerScore()[1]}`;
+    }${game.getPlayerName()[1]}: ${game.getPlayerScore()[1]}`;
 
     const currentBoard = game.getBoard();
 
@@ -269,7 +282,6 @@ const ScreenController = (playerOne, playerTwo) => {
 const startGame = () => {
   const currentPlayerOne = document.querySelector('#player-one').value;
   const currentPlayerTwo = document.querySelector('#player-two').value;
-  console.log(currentPlayerOne, currentPlayerTwo);
   ScreenController(currentPlayerOne, currentPlayerTwo);
   getCurrentPlayerName.remove();
 };
