@@ -168,7 +168,6 @@ const ScreenController = (playerOne, playerTwo) => {
   boardDiv.classList.add('board');
 
   const playerTurnDiv = document.createElement('div');
-  playerTurnDiv.classList.add('player-turn');
 
   const resetBoardButton = document.createElement('button');
   resetBoardButton.classList.add('reset-board-btn');
@@ -182,7 +181,11 @@ const ScreenController = (playerOne, playerTwo) => {
   const scoreBoardText = document.createElement('p');
 
   const updateScreen = () => {
+    // Prevent updating new content on top of new cells
     boardDiv.textContent = '';
+
+    // Remove any existing class on player div
+    playerTurnDiv.classList.remove('player-one', 'player-two');
 
     scoreBoardText.textContent = `${game.getPlayerName()[0]} : ${
       game.getPlayerScore()[0]
@@ -197,6 +200,11 @@ const ScreenController = (playerOne, playerTwo) => {
     playerTurnDiv.textContent = `
       ${currentPlayer.name}'s Turn!
     `;
+
+    playerTurnDiv.classList.add(
+      currentPlayer.mark === 'X' ? 'player-one' : 'player-two',
+    );
+
     currentBoard.forEach((row, rowIndex) => {
       row.forEach((cell, columnIndex) => {
         const cellButton = document.createElement('button');
@@ -282,6 +290,12 @@ const ScreenController = (playerOne, playerTwo) => {
 const startGame = () => {
   const currentPlayerOne = document.querySelector('#player-one').value;
   const currentPlayerTwo = document.querySelector('#player-two').value;
+
+  if (currentPlayerOne === currentPlayerTwo) {
+    alert('Cannot have same name');
+    return;
+  }
+
   ScreenController(currentPlayerOne, currentPlayerTwo);
   getCurrentPlayerName.remove();
 };
