@@ -28,7 +28,10 @@ body {
   flex-direction: column;
 }
 
-
+.score-board {
+  font-size: 1.25rem;
+  gap: 1rem;
+}
 
 .score-board__form {
   gap: 1rem;
