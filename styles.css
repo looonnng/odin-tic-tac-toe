@@ -75,7 +75,8 @@ body {
 
 .play-again-btn,
 .reset-board-btn,
-.start-game-btn {
+.start-game-btn,
+.new-game-btn {
   color: #254336;
   background-color: #dad3be;
   padding: 0.5rem 1rem;
@@ -91,7 +92,8 @@ body {
 
 .play-again-btn:hover,
 .reset-board-btn:hover,
-.start-game-btn:hover {
+.start-game-btn:hover,
+.new-game-btn:hover {
   opacity: 0.75;
 }
 
@@ -107,4 +109,8 @@ body {
   background-color: #dad3be;
   padding: 0.25rem;
   border-radius: 0.5rem;
+}
+
+.finished-round-wrapper {
+  gap: 1rem;
 }
