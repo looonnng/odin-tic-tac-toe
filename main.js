@@ -167,7 +167,7 @@ const GameController = (
 
 const ScreenController = (playerOne, playerTwo) => {
   const game = GameController(playerOne, playerTwo);
-
+  const boardContainer = document.querySelector('.board-container');
   // Create game board && current player's turn && reset board button
   const boardDiv = document.createElement('div');
   boardDiv.classList.add('board');
@@ -178,12 +178,11 @@ const ScreenController = (playerOne, playerTwo) => {
   resetBoardButton.classList.add('reset-board-btn');
   resetBoardButton.textContent = 'Reset Board';
 
-  document.querySelector('.board-container').appendChild(playerTurnDiv);
-  document.querySelector('.board-container').appendChild(boardDiv);
-  document.querySelector('.board-container').appendChild(resetBoardButton);
+  boardContainer.appendChild(playerTurnDiv);
+  boardContainer.appendChild(boardDiv);
+  boardContainer.appendChild(resetBoardButton);
 
   const scoreBoardDiv = document.querySelector('.score-board');
-  scoreBoardDiv.classList.add('row');
 
   const playerOneScoreDiv = document.createElement('p');
   const playerTwoScoreDiv = document.createElement('p');
@@ -253,10 +252,10 @@ const ScreenController = (playerOne, playerTwo) => {
       // Create a winner display
       resetBoardButton.hidden = true;
 
-      const resultDiv = document.createElement('h1');
+      const resultDiv = document.createElement('h2');
       resultDiv.innerHTML = result;
       resultDiv.classList.add('game-result');
-      document.querySelector('.board-container').appendChild(resultDiv);
+      boardContainer.appendChild(resultDiv);
 
       boardDiv.removeEventListener('click', clickHandlerBoard);
 
@@ -264,9 +263,18 @@ const ScreenController = (playerOne, playerTwo) => {
       const playAgainButton = document.createElement('button');
       playAgainButton.textContent = 'Play Again';
       playAgainButton.classList.add('play-again-btn');
-      document
-        .querySelector('.board-container')
-        .insertBefore(playAgainButton, resetBoardButton);
+
+      // Create button for new game
+      const newGameButton = document.createElement('button');
+      newGameButton.textContent = 'New Game';
+      newGameButton.classList.add('new-game-btn');
+
+      // Wrapper for buttons after round is finished
+      const finishedRoundButtonsWrapper = document.createElement('div');
+      finishedRoundButtonsWrapper.classList.add('finished-round-wrapper');
+      finishedRoundButtonsWrapper.classList.add('row');
+      finishedRoundButtonsWrapper.appendChild(playAgainButton);
+      finishedRoundButtonsWrapper.appendChild(newGameButton);
 
       // Function to handle event after play again is clicked
       const clickHandlerPlayAgain = () => {
@@ -276,11 +284,33 @@ const ScreenController = (playerOne, playerTwo) => {
         updateScreen();
 
         resultDiv.remove();
-        playAgainButton.remove();
+        finishedRoundButtonsWrapper.remove();
         resetBoardButton.hidden = false;
       };
 
+      const clickHandlerNewGame = () => {
+        boardContainer.querySelectorAll('*').forEach((childElement) => {
+          if (
+            !(
+              (childElement.classList[0] != 'title' &&
+                childElement.classList[0] == 'score-board') ||
+              (childElement.classList[0] != 'score-board' &&
+                childElement.classList[0] == 'title')
+            )
+          ) {
+            childElement.remove();
+          }
+        });
+        boardContainer.appendChild(getCurrentPlayerName);
+      };
+
       playAgainButton.addEventListener('click', clickHandlerPlayAgain);
+      newGameButton.addEventListener('click', clickHandlerNewGame);
+
+      boardContainer.insertBefore(
+        finishedRoundButtonsWrapper,
+        resetBoardButton,
+      );
     }
   };
 
