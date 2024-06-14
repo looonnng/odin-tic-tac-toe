@@ -183,7 +183,10 @@ const ScreenController = (playerOne, playerTwo) => {
   document.querySelector('.board-container').appendChild(resetBoardButton);
 
   const scoreBoardDiv = document.querySelector('.score-board');
-  const scoreBoardText = document.createElement('p');
+  scoreBoardDiv.classList.add('row');
+
+  const playerOneScoreDiv = document.createElement('p');
+  const playerTwoScoreDiv = document.createElement('p');
 
   const updateScreen = () => {
     // Prevent updating new content on top of new cells
@@ -192,15 +195,18 @@ const ScreenController = (playerOne, playerTwo) => {
     // Remove any existing class on player div
     playerTurnDiv.classList.remove('player-one', 'player-two');
 
-    scoreBoardText.textContent = `${game.getPlayerName()[0]} : ${
+    playerOneScoreDiv.textContent = `${game.getPlayerName()[0]} : ${
       game.getPlayerScore()[0]
-    }${game.getPlayerName()[1]}: ${game.getPlayerScore()[1]}`;
+    }`;
+    playerTwoScoreDiv.textContent = `${game.getPlayerName()[1]} : ${
+      game.getPlayerScore()[1]
+    }`;
+    scoreBoardDiv.appendChild(playerOneScoreDiv);
+    scoreBoardDiv.appendChild(playerTwoScoreDiv);
 
     const currentBoard = game.getBoard();
 
     const currentPlayer = game.getActivePlayer();
-
-    scoreBoardDiv.appendChild(scoreBoardText);
 
     playerTurnDiv.textContent = `
       ${currentPlayer.name}'s Turn!
