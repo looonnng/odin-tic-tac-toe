@@ -58,7 +58,7 @@ body {
 
 .cell {
   color: #254336;
-  background: #dad3be;
+  background-color: #dad3be;
   font-size: 3rem;
   font-weight: 800;
 
@@ -101,4 +101,10 @@ body {
 
 .player-two {
   color: var(--player-two);
+}
+
+.player-input {
+  background-color: #dad3be;
+  padding: 0.25rem;
+  border-radius: 0.5rem;
 }
