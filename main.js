@@ -138,10 +138,15 @@ const GameController = (
       win.checkWinDiagonal(board, getActivePlayer().mark)
     ) {
       getActivePlayer().score += 1;
+      // Get current round winner
+      // Then set X player to always go first
+      const currentWinner = getActivePlayer();
+      activePlayer = players[0];
       return `Hell yeah, <span class='${
-        getActivePlayer().mark === 'X' ? 'player-one' : 'player-two'
-      }'>${getActivePlayer().name}</span> just won`;
+        currentWinner.mark === 'X' ? 'player-one' : 'player-two'
+      }'>${currentWinner.name}</span> just won`;
     } else if (win.checkTie(board)) {
+      activePlayer = players[0];
       return 'Boring, this is a tie game';
     }
 
