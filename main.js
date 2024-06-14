@@ -290,16 +290,10 @@ const ScreenController = (playerOne, playerTwo) => {
 
       const clickHandlerNewGame = () => {
         boardContainer.querySelectorAll('*').forEach((childElement) => {
-          if (
-            !(
-              (childElement.classList[0] != 'title' &&
-                childElement.classList[0] == 'score-board') ||
-              (childElement.classList[0] != 'score-board' &&
-                childElement.classList[0] == 'title')
-            )
-          ) {
-            childElement.remove();
-          }
+          const isTitle = childElement.classList.contains('title');
+          const isScoreBoard = childElement.classList.contains('score-board');
+
+          if (!isTitle && !isScoreBoard) childElement.remove();
         });
         boardContainer.appendChild(getCurrentPlayerName);
       };
