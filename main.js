@@ -255,7 +255,8 @@ const ScreenController = (playerOne, playerTwo) => {
       const resultDiv = document.createElement('h2');
       resultDiv.innerHTML = result;
       resultDiv.classList.add('game-result');
-      boardContainer.appendChild(resultDiv);
+      boardContainer.insertBefore(resultDiv, playerTurnDiv);
+      playerTurnDiv.hidden = true;
 
       boardDiv.removeEventListener('click', clickHandlerBoard);
 
@@ -286,6 +287,7 @@ const ScreenController = (playerOne, playerTwo) => {
         resultDiv.remove();
         finishedRoundButtonsWrapper.remove();
         resetBoardButton.hidden = false;
+        playerTurnDiv.hidden = false;
       };
 
       const clickHandlerNewGame = () => {
