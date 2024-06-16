@@ -45,9 +45,11 @@ body {
 
 .board {
   display: grid;
-  height: 500px;
-  width: 100%;
-  max-width: 500px;
+  height: 90vmin;
+  width: 90vmin;
+  max-height: 600px;
+  max-width: 600px;
+
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
   border: 1px solid #6b8a7a;
